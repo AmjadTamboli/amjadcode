@@ -1,0 +1,47 @@
+Sub datatransfer_safe()
+On Error GoTo errhandler
+Dim mainws As Worksheet
+Dim lookupws As Worksheet
+Dim finalws As Worksheet
+Dim mainlr As Long
+Dim a As Long
+Dim i As Long
+Dim companyname As String
+
+Set mainws = ThisWorkbook.Sheets("Main data")
+Set lookupws = ThisWorkbook.Sheets("per company monthly sale")
+Set finalws = ThisWorkbook.Sheets("All company monthly sale")
+
+mainlr = mainws.Cells(mainws.Rows.Count, 1).End(xlUp).Row
+
+For i = 2 To 6
+companyname = mainws.Cells(i, 1).Value
+If companyname <> "" Then
+lookupws.Range("c1").Value = companyname
+a = finalws.Cells(finalws.Rows.Count, 1).End(xlUp).Row + 1
+Application.Calculate
+DoEvents
+Application.Wait Now + TimeValue("0:00:02")
+finalws.Cells(a, 1).Value = companyname
+finalws.Cells(a, 2).Value = lookupws.Range("c2").Value
+finalws.Cells(a, 3).Value = lookupws.Range("l2").Value
+finalws.Cells(a, 4).Value = lookupws.Range("m2").Value
+finalws.Cells(a, 5).Value = lookupws.Range("n2").Value
+finalws.Cells(a, 6).Value = lookupws.Range("o2").Value
+finalws.Cells(a, 7).Value = lookupws.Range("p2").Value
+finalws.Cells(a, 8).Value = lookupws.Range("q2").Value
+finalws.Cells(a, 9).Value = lookupws.Range("r2").Value
+finalws.Cells(a, 10).Value = lookupws.Range("s2").Value
+finalws.Cells(a, 11).Value = lookupws.Range("t2").Value
+
+End If
+Next i
+MsgBox "Data Shifted please recheack", vbInformation
+errhandler:
+MsgBox "? error:" & Err.Description, vbCritical
+
+End Sub
+
+'VBA large data excel Automation If sheet large data set of around 244 vlookup formula  Structure around 3 sheet '
+
+
